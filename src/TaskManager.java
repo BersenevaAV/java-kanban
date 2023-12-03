@@ -1,25 +1,28 @@
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
-public class Manager {
-    int id = 0;
-    HashMap<Integer, Task> tasks = new HashMap<>();
-    HashMap<Integer, Epic> epics = new HashMap<>();;
-    HashMap<Integer, SubTask> subTasks = new HashMap<>();;
+public class TaskManager {
+    private int id = 0; //если сделать final, то не смогу присваивать новый id для каждой новой задачи
+    private HashMap<Integer, Task> tasks = new HashMap<>();
+    private HashMap<Integer, Epic> epics = new HashMap<>();
+    private HashMap<Integer, SubTask> subTasks = new HashMap<>();
 
+    private void increaseId(){
+        id++;
+    }
     ////добавление задач
     public void addNewTask(Task task){
-        id++;
+        increaseId();
         tasks.put(id,task);
     }
     public void addNewEpic(Epic epic){
-        id++;
+        increaseId();
         epics.put(id,epic);
     }
     public void addNewSubTask(SubTask subTask, int idEpic){
         if (epics.containsKey(idEpic)){
-            id++;
+            increaseId();
             subTasks.put(id,subTask);
             epics.get(idEpic).addSubTask(id);
         }
@@ -42,9 +45,16 @@ public class Manager {
         this.tasks.clear();
     }
     public void clearAllEpics(){
+        clearAllSubTasks();
         this.epics.clear();
     }
     public void clearAllSubTasks(){
+        for (int i: epics.keySet()){
+            if(!epics.get(i).getEpicSubTasks().isEmpty()){
+                epics.get(i).getEpicSubTasks().clear();
+                epics.get(i).setStatus("NEW");
+            }
+        }
         this.subTasks.clear();
     }
     ////получение задачи по id
@@ -77,6 +87,16 @@ public class Manager {
     public void updateSubTask(int id, SubTask newSubTask){
         if (subTasks.containsKey(id)){
             subTasks.put(id,newSubTask);
+            int epicId = subTasks.get(id).getIdEpic();
+            if(isAllSubTasksEqualsStatus(id, "NEW")){
+                epics.get(epicId).setStatus("NEW");
+            }
+            else if(isAllSubTasksEqualsStatus(id, "DONE")){
+                epics.get(epicId).setStatus("DONE");
+            }
+            else {
+                epics.get(epicId).setStatus("IN_PROGRESS");
+            }
         }
         else{
             System.out.println("Неправильный ввод id");
@@ -102,8 +122,18 @@ public class Manager {
         }
     }
     public void deleteSubTask(int id){
+
         if (subTasks.containsKey(id)){
+            //если у эпика больше нет подзадач, то устанавливаю ему новый статус
+            int idEpic = subTasks.get(id).getIdEpic();
+            ArrayList<Integer> subTasksofEpic = epics.get(idEpic).getEpicSubTasks();
             subTasks.remove(id);
+            if(subTasksofEpic.contains(id)){
+                subTasksofEpic.remove((Object)id);
+            }
+            if(subTasksofEpic.isEmpty()){
+                epics.get(idEpic).setStatus("NEW");
+            }
         }
         else{
             System.out.println("Неправильный ввод id");
@@ -115,7 +145,6 @@ public class Manager {
         for (int i:epics.get(idEpic).getEpicSubTasks()){
             listSubTasks.add(getSubTask(i));
         }
-
         return listSubTasks;
     }
     ////установить статус задачи
@@ -151,5 +180,4 @@ public class Manager {
             setStatusEpic(idEpic, status);
         }
     }
-
 }
