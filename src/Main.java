@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Поехали!");
 
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = new InMemoryTaskManager();
         taskManager.addNewTask(new Task("Купить хлеб", ""));
         taskManager.addNewTask(new Task("Забрать заказ", ""));
 
@@ -22,10 +22,10 @@ public class Main {
         System.out.println("Подзадачи:  " + taskManager.getSubTasks());
 
         System.out.println("----------Проверка статуса--------------------------------------");
-        taskManager.setStatusSubTask(5, "DONE");
-        taskManager.setStatusSubTask(7, "DONE");
+        taskManager.setStatusSubTask(5, StatusesOfTasks.DONE);
+        taskManager.setStatusSubTask(7, StatusesOfTasks.DONE);
         System.out.println("Эпики:  " + taskManager.getEpics());
-        taskManager.setStatusTask(1, "IN_PROGRESS");
+        taskManager.setStatusTask(1, StatusesOfTasks.IN_PROGRESS);
         System.out.println("Задачи:  " + taskManager.getTasks());
 
         System.out.println("----------Проверка удаления задач--------------------------------------");
@@ -40,6 +40,10 @@ public class Main {
         taskManager.clearAllSubTasks();
         System.out.println("Эпики:  " + taskManager.getEpics());
         System.out.println("Подзадачи:  " + taskManager.getSubTasks());
+
+        System.out.println("----------Проверка историии --------------------------------------");
+
+        System.out.println(((InMemoryTaskManager) taskManager).getListHistory());
 
     }
 
