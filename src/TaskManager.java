@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface TaskManager {
 
@@ -10,9 +11,9 @@ public interface TaskManager {
     void addNewSubTask(SubTask subTask, int idEpic);
 
     ////получение всех задач
-    HashMap<Integer, Task> getTasks();
-    HashMap<Integer, Epic> getEpics();
-    HashMap<Integer, SubTask> getSubTasks();
+    Map<Integer, Task> getTasks();
+    Map<Integer, Epic> getEpics();
+    Map<Integer, SubTask> getSubTasks();
 
     ////очищение списка задач
     void clearAllTasks();
@@ -38,7 +39,9 @@ public interface TaskManager {
     ArrayList<SubTask> getSubTasksOfEpic(int idEpic);
 
     ////установить статус задачи
-    void setStatusTask(int id, StatusesOfTasks status);
-    void setStatusEpic(int id, StatusesOfTasks status);
-    void setStatusSubTask(int id, StatusesOfTasks status);
+    void setStatusTask(int id, Status status);
+    void setStatusEpic(int id, Status status);
+    void setStatusSubTask(int id, Status status);
+    public List<Task> getHistory();
+
 }

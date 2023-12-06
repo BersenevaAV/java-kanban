@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -22,10 +20,10 @@ public class Main {
         System.out.println("Подзадачи:  " + taskManager.getSubTasks());
 
         System.out.println("----------Проверка статуса--------------------------------------");
-        taskManager.setStatusSubTask(5, StatusesOfTasks.DONE);
-        taskManager.setStatusSubTask(7, StatusesOfTasks.DONE);
+        taskManager.setStatusSubTask(5, Status.DONE);
+        taskManager.setStatusSubTask(7, Status.DONE);
         System.out.println("Эпики:  " + taskManager.getEpics());
-        taskManager.setStatusTask(1, StatusesOfTasks.IN_PROGRESS);
+        taskManager.setStatusTask(1, Status.IN_PROGRESS);
         System.out.println("Задачи:  " + taskManager.getTasks());
 
         System.out.println("----------Проверка удаления задач--------------------------------------");
@@ -43,7 +41,7 @@ public class Main {
 
         System.out.println("----------Проверка историии --------------------------------------");
 
-        System.out.println(((InMemoryTaskManager) taskManager).getListHistory());
+        System.out.println(taskManager.getHistory());
 
     }
 

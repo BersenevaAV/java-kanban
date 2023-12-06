@@ -2,17 +2,17 @@ public class Task {
     protected int id;
     protected String name;
     protected String description;
-    protected StatusesOfTasks status = StatusesOfTasks.NEW;
+    protected Status status = Status.NEW;
     public Task(String name, String description){
         this.name = name;
         this.description = description;
     }
 
-    public void setStatus(StatusesOfTasks status){
-        if (status.equals(StatusesOfTasks.NEW) || status.equals(StatusesOfTasks.IN_PROGRESS) || status.equals(StatusesOfTasks.DONE))
+    public void setStatus(Status status){
+        if (status.equals(Status.NEW) || status.equals(Status.IN_PROGRESS) || status.equals(Status.DONE))
             this.status = status;
     }
-    public StatusesOfTasks getStatus(){
+    public Status getStatus(){
         return this.status;
     }
     @Override
