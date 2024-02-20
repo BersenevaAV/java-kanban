@@ -1,11 +1,12 @@
 public class Task {
-    protected int id;
+    protected final int id;
     protected String name;
     protected String description;
     protected Status status = Status.NEW;
-    public Task(String name, String description){
+    public Task(String name, String description, int id){
         this.name = name;
         this.description = description;
+        this.id = id;
     }
 
     public void setStatus(Status status){
@@ -19,7 +20,8 @@ public class Task {
     public String toString(){
         return name + "(статус=" + status + ")";
     }
-
-
+    public int getId(){
+        return id;
+    }
 
 }

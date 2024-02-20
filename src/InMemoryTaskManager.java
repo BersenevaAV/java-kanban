@@ -8,7 +8,6 @@ public class InMemoryTaskManager implements TaskManager {
     private Map<Integer, Task> tasks = new HashMap<>();
     private Map<Integer, Epic> epics = new HashMap<>();
     private Map<Integer, SubTask> subTasks = new HashMap<>();
-    //private HistoryManager historyManager= new InMemoryHistoryManager();
     private final HistoryManager historyManager= Managers.getDefaultHistory();
 
 
@@ -17,20 +16,24 @@ public class InMemoryTaskManager implements TaskManager {
     }
     ////добавление задач
     @Override
-    public void addNewTask(Task task){
+    /*public void addNewTask(Task task){
         increaseId();
         tasks.put(id,task);
-    }
-    @Override
-    public void addNewEpic(Epic epic){
+    }*/
+    public void addNewTask(String name, String description){
         increaseId();
-        epics.put(id,epic);
+        tasks.put(id, new Task(name, description,id));
     }
     @Override
-    public void addNewSubTask(SubTask subTask, int idEpic){
+    public void addNewEpic(String name, String description){
+        increaseId();
+        epics.put(id, new Epic(name, description,id));
+    }
+    @Override
+    public void addNewSubTask(String name, String description, int idEpic){
         if (epics.containsKey(idEpic)){
             increaseId();
-            subTasks.put(id,subTask);
+            subTasks.put(id, new SubTask(name, description, idEpic, id));
             getEpic(idEpic).addSubTask(id);
         }
         else{
@@ -84,6 +87,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
     @Override
     public SubTask getSubTask(int id){
+
         historyManager.add(subTasks.get(id));
         return subTasks.get(id);
     }
@@ -130,6 +134,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteTask(int id){
         if (tasks.containsKey(id)){
             tasks.remove(id);
+            historyManager.remove(id);
         }
         else{
             System.out.println("Неправильный ввод id");
@@ -138,9 +143,15 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteEpic(int id){
         if (epics.containsKey(id)){
-            for (int i:getEpic(id).getEpicSubTasks())
-                deleteSubTask(i);
+            if(!getEpic(id).getEpicSubTasks().isEmpty()){
+                subTasks.values().removeAll(getEpic(id).getEpicSubTasks());
+                for (int i:getEpic(id).getEpicSubTasks()) {
+                    historyManager.remove(i);
+                }
+            }
+            subTasks.values().removeAll(getEpic(id).getEpicSubTasks());
             epics.remove(id);
+            historyManager.remove(id);
         }
         else{
             System.out.println("Неправильный ввод id");
@@ -150,13 +161,18 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteSubTask(int id){
 
         if (subTasks.containsKey(id)){
-            //если у эпика больше нет подзадач, то устанавливаю ему новый статус
+
             int idEpic = getSubTask(id).getIdEpic();
+
             ArrayList<Integer> subTasksofEpic = getEpic(idEpic).getEpicSubTasks();
-            subTasks.remove(id);
             if(subTasksofEpic.contains(id)){
                 subTasksofEpic.remove((Object)id);
+                historyManager.remove(id);
             }
+
+            subTasks.remove(id);
+
+            //если у эпика больше нет подзадач, то устанавливаю ему новый статус
             if(subTasksofEpic.isEmpty()){
                 getEpic(idEpic).setStatus(Status.NEW);
             }
