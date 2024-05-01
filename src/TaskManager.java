@@ -6,9 +6,9 @@ import java.util.Map;
 public interface TaskManager {
 
     ////добавление задач
-    void addNewTask(String name, String description);
-    void addNewEpic(String name, String description);
-    void addNewSubTask(String name, String description, int idEpic);
+    int addNewTask(String name, String description);
+    int addNewEpic(String name, String description);
+    int addNewSubTask(String name, String description, int idEpic);
 
     ////получение всех задач
     Map<Integer, Task> getTasks();

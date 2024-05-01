@@ -15,29 +15,34 @@ public class InMemoryTaskManager implements TaskManager {
         id++;
     }
     ////добавление задач
-    @Override
+
     /*public void addNewTask(Task task){
         increaseId();
         tasks.put(id,task);
     }*/
-    public void addNewTask(String name, String description){
+    @Override
+    public int addNewTask(String name, String description){
         increaseId();
         tasks.put(id, new Task(name, description,id));
+        return this.id;
     }
     @Override
-    public void addNewEpic(String name, String description){
+    public int addNewEpic(String name, String description){
         increaseId();
         epics.put(id, new Epic(name, description,id));
+        return this.id;
     }
     @Override
-    public void addNewSubTask(String name, String description, int idEpic){
+    public int addNewSubTask(String name, String description, int idEpic){
         if (epics.containsKey(idEpic)){
             increaseId();
             subTasks.put(id, new SubTask(name, description, idEpic, id));
             getEpic(idEpic).addSubTask(id);
+            return this.id;
         }
         else{
             System.out.println("Неправильный ввод id эпика");
+            return 0;
         }
     }
     ////получение всех задач
@@ -229,4 +234,6 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getHistory(){
         return historyManager.getHistory();
     }
+
+
 }
