@@ -17,6 +17,4 @@ public class Epic extends Task{
         return name + "(статус=" + status + ") " + subTasks;
     }
 
-
-
 }

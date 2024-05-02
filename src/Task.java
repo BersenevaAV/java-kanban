@@ -24,5 +24,10 @@ public class Task {
         return id;
     }
 
+    @Override
+    public boolean equals(Object obj){
+        return obj != null && obj.getClass() == this.getClass() && ((Task) obj).getId()==this.id;
+    }
+
 
 }
