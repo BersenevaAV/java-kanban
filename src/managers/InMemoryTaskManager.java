@@ -1,7 +1,15 @@
+package managers;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import managers.HistoryManager;
+import managers.Managers;
+import managers.TaskManager;
+import tasks.*;
+
 
 public class InMemoryTaskManager implements TaskManager {
     private int id = 0; //если сделать final, то не смогу присваивать новый id для каждой новой задачи
