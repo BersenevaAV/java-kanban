@@ -1,7 +1,6 @@
 package managers;
 
 import tasks.Epic;
-import tasks.Status;
 import tasks.SubTask;
 import tasks.Task;
 
@@ -12,9 +11,9 @@ import java.util.Map;
 public interface TaskManager {
 
     ////добавление задач
-    int addNewTask(String name, String description);
-    int addNewEpic(String name, String description);
-    int addNewSubTask(String name, String description, int idEpic);
+    int addNewTask(Task task);
+    int addNewEpic(Epic epic);
+    int addNewSubTask(SubTask subTask);
 
     ////получение всех задач
     Map<Integer, Task> getTasks();
@@ -43,11 +42,6 @@ public interface TaskManager {
 
     ////получение подзадач конкретного эпика
     ArrayList<SubTask> getSubTasksOfEpic(int idEpic);
-
-    ////установить статус задачи
-    void setStatusTask(int id, Status status);
-    void setStatusEpic(int id, Status status);
-    void setStatusSubTask(int id, Status status);
-    public List<Task> getHistory();
+    List<Task> getHistory();
 
 }

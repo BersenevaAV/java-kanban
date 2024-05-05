@@ -22,29 +22,29 @@ public class InMemoryTaskManager implements TaskManager {
     private void increaseId(){
         id++;
     }
-    ////добавление задач
 
-    /*public void addNewTask(Task task){
-        increaseId();
-        tasks.put(id,task);
-    }*/
+    ////добавление задач
     @Override
-    public int addNewTask(String name, String description){
+    public int addNewTask(Task task){
         increaseId();
-        tasks.put(id, new Task(name, description,id));
+        tasks.put(this.id, task);
+        task.setId(this.id);
         return this.id;
     }
     @Override
-    public int addNewEpic(String name, String description){
+    public int addNewEpic(Epic epic){
         increaseId();
-        epics.put(id, new Epic(name, description,id));
+        epics.put(id, epic);
+        epic.setId(this.id);
         return this.id;
     }
     @Override
-    public int addNewSubTask(String name, String description, int idEpic){
+    public int addNewSubTask(SubTask subtask){
+        int idEpic = subtask.getIdEpic();
         if (epics.containsKey(idEpic)){
             increaseId();
-            subTasks.put(id, new SubTask(name, description, idEpic, id));
+            subTasks.put(id, subtask);
+            subtask.setId(this.id);
             getEpic(idEpic).addSubTask(id);
             return this.id;
         }
@@ -53,6 +53,7 @@ public class InMemoryTaskManager implements TaskManager {
             return 0;
         }
     }
+
     ////получение всех задач
     @Override
     public Map<Integer, Task> getTasks(){
@@ -89,20 +90,31 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     ////получение задачи по id
     public Task getTask(int id){
-        historyManager.add(tasks.get(id));
-        return tasks.get(id);
+        if(tasks.containsKey(id)){
+            historyManager.add(tasks.get(id));
+            return tasks.get(id);
+        }
+        else
+            return null;
     }
     @Override
     public Epic getEpic(int id)
     {
-        historyManager.add(epics.get(id));
-        return epics.get(id);
+        if(epics.containsKey(id)){
+            historyManager.add(epics.get(id));
+            return epics.get(id);
+        }
+        else
+            return null;
     }
     @Override
     public SubTask getSubTask(int id){
-
-        historyManager.add(subTasks.get(id));
-        return subTasks.get(id);
+        if(subTasks.containsKey(id)){
+            historyManager.add(subTasks.get(id));
+            return subTasks.get(id);
+        }
+        else
+            return null;
     }
     @Override
     ////обновление задачи по id
@@ -204,7 +216,7 @@ public class InMemoryTaskManager implements TaskManager {
         return listSubTasks;
     }
     ////установить статус задачи
-    @Override
+
     public void setStatusTask(int id, Status status){
         if (tasks.containsKey(id)){
             getTask(id).setStatus(status);
@@ -219,7 +231,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return flag;
     }
-    @Override
+
     public void setStatusEpic(int id, Status status){
         if (epics.containsKey(id)){
             if(isAllSubTasksEqualsStatus(id, status) && (status.equals(Status.NEW) || status.equals(Status.DONE))){
@@ -230,7 +242,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
-    @Override
+
     public void setStatusSubTask(int id, Status status){
         SubTask subTask = getSubTask(id);
         int idEpic = subTask.getIdEpic();

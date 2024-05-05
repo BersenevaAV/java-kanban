@@ -43,7 +43,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         return historyList;
     }
 
-    //--CustomLinkedList--
+    // CustomLinkedList
     public Node head = null;
     public Node tail = null;
     private int size = 0;

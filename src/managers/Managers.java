@@ -3,7 +3,6 @@ package managers;
 import managers.HistoryManager;
 
 public class Managers {
-
     static TaskManager getDefault(){
         return (new InMemoryTaskManager());
     }

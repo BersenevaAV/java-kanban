@@ -1,5 +1,8 @@
 import managers.InMemoryTaskManager;
 import managers.TaskManager;
+import tasks.Epic;
+import tasks.SubTask;
+import tasks.Task;
 
 public class Main {
 
@@ -8,22 +11,21 @@ public class Main {
 
         System.out.println("\n----------Добавление задач--------------------------------------");
         TaskManager taskManager = new InMemoryTaskManager();
-        taskManager.addNewTask("Купить хлеб", "");
-        taskManager.addNewTask("Забрать заказ", "");
+        taskManager.addNewTask(new Task("Купить хлеб", ""));
+        taskManager.addNewTask(new Task("Забрать заказ", ""));
 
         System.out.println("История задач:" + taskManager.getHistory());
 
         System.out.println("\n----------Добавление эпиков--------------------------------------");
-        taskManager.addNewEpic("Ремонт", "");
-        taskManager.addNewEpic("Переезд", "");
+        taskManager.addNewEpic(new Epic("Ремонт", ""));
+        taskManager.addNewEpic(new Epic("Переезд", ""));
 
         System.out.println("История задач:" + taskManager.getHistory());
 
         System.out.println("\n----------Добавление подзадач--------------------------------------");
-        taskManager.addNewSubTask("Задача 1", "", 3);
-        taskManager.addNewSubTask("Задача 2", "",  3);
-        taskManager.addNewSubTask("Задача 3", "", 3);
-
+        taskManager.addNewSubTask(new SubTask("Задача 1", "", 3));
+        taskManager.addNewSubTask(new SubTask("Задача 2", "",  3));
+        taskManager.addNewSubTask(new SubTask("Задача 3", "", 3));
         System.out.println("История задач:" + taskManager.getHistory());
 
         System.out.println("\n----------Проверка вывода--------------------------------------");
