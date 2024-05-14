@@ -58,11 +58,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             for (Task task: subTasks.values()) {
                 fw.write(task.toString() + "\n");
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (ManagerSaveException e) {
+        } catch (ManagerSaveException e) {
             e.printStackTrace();
         }
 
