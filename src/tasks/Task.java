@@ -31,7 +31,6 @@ public class Task {
     @Override
     public String toString() {
         return id + "," + type + "," + name + "," + status + "," + description;
-
     }
 
     public int getId() {
@@ -45,6 +44,6 @@ public class Task {
 
     @Override
     public boolean equals(Object obj) {
-        return obj != null && obj.getClass()==this.getClass() && ((Task) obj).getId()==this.id && this.id!=0;
+        return obj != null && obj.getClass() == this.getClass() && ((Task) obj).getId() == this.id && this.id != 0;
     }
 }
