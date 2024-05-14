@@ -21,7 +21,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         Node newNode = new Node(task);
         if (historyMap.containsKey(task.getId())) {
             removeNode(historyMap.get(task.getId()));
-        } else{
+        } else {
             if (size == 10) {
                 removeNode(head);
                 System.out.println("Удален первый узел");
@@ -66,8 +66,8 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private void removeNode(Node node) {
         Node currentNode = head;
-        if (size!=0) {
-            for (int i=0;i<size;i++) {
+        if (size != 0) {
+            for (int i = 0;i < size;i++) {
                 if (currentNode.data.getId() == node.data.getId()) {
                     Node nextNode = currentNode.next;
                     Node prevNode = currentNode.prev;
@@ -78,8 +78,7 @@ public class InMemoryHistoryManager implements HistoryManager {
                     }
                     if (prevNode == null) {
                         head = nextNode;
-                    }
-                    else {
+                    } else {
                         prevNode.next = nextNode;
                     }
                     size--;
