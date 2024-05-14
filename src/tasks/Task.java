@@ -1,16 +1,19 @@
 package tasks;
 
 public class Task {
-    protected int id=0;
+    protected int id;;
     protected String name;
     protected String description;
-    protected Status status = Status.NEW;
+    protected Status status;
+    protected TypeTask type;
     public Task(String name, String description){
         this.name = name;
         this.description = description;
+        this.id = 0;
+        this.status = Status.NEW;
+        this.type = TypeTask.TASK;
     }
-    protected TypeTask type = TypeTask.TASK;
-
+    
     public TypeTask getType() {
         return type;
     }
