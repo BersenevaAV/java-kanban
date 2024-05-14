@@ -7,11 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager{
-    String filename = "file.txt";
-    public FileBackedTaskManager(){}
-    public FileBackedTaskManager(List<Task> allTasks){
+    String filename;
+
+    public FileBackedTaskManager() {
+        this.filename = "file.txt";
+    }
+
+    public FileBackedTaskManager(List<Task> allTasks) {
         for(Task task: allTasks){
-            if(task!=null && task.getType().equals(TypeTask.TASK)){
+            if(task != null && task.getType().equals(TypeTask.TASK)){
                 super.tasks.put(task.getId(), task);
             }
             else if(task!=null && task.getType().equals(TypeTask.EPIC)){
@@ -22,29 +26,31 @@ public class FileBackedTaskManager extends InMemoryTaskManager{
             }
         }
     }
+
     @Override
-    public int addNewTask(Task task){
+    public int addNewTask(Task task) {
         int id = super.addNewTask(task);
         save();
         return id;
     }
 
     @Override
-    public int addNewEpic(Epic epic){
+    public int addNewEpic(Epic epic) {
         int id = super.addNewEpic(epic);
         save();
         return id;
     }
 
     @Override
-    public int addNewSubTask(SubTask subtask){
+    public int addNewSubTask(SubTask subtask) {
         int id = super.addNewSubTask(subtask);
         save();
         return id;
     }
+
     public void save() {
 
-        try(FileWriter fw = new FileWriter(filename, StandardCharsets.UTF_8)){
+        try(FileWriter fw = new FileWriter(filename, StandardCharsets.UTF_8)) {
             fw.write("id,type,name,status,description,epic" + "\n");
             for(Task task: tasks.values()){
                 fw.write(task.toString() + "\n");
@@ -67,7 +73,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager{
 
     }
 
-    static public Task fromString(String value){
+    static public Task fromString(String value) {
         String[] taskStr = value.split(",");
         Task task;
         if(TypeTask.valueOf(taskStr[1]).equals(TypeTask.TASK)){
@@ -103,5 +109,4 @@ public class FileBackedTaskManager extends InMemoryTaskManager{
         br.close();
         return new FileBackedTaskManager(allTasks);
     }
-
 }
