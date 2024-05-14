@@ -12,7 +12,7 @@ public class Main {
         System.out.println("----------Сохранение и загрузка пустого файла--------------------------------------");
         FileBackedTaskManager fileManager1 = new FileBackedTaskManager();
         fileManager1.save();
-        fileManager1 = fileManager1.loadFromFile(new File("file.txt"));
+        fileManager1.loadFromFile(new File("file.txt"));
         System.out.println("Задачи:" + fileManager1.getTasks());
         System.out.println("Эпики:" + fileManager1.getEpics());
         System.out.println("Подзадачи:" + fileManager1.getSubTasks());
