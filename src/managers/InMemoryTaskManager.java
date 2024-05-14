@@ -12,10 +12,10 @@ import tasks.*;
 
 
 public class InMemoryTaskManager implements TaskManager {
-    private int id = 0; //если сделать final, то не смогу присваивать новый id для каждой новой задачи
-    private Map<Integer, Task> tasks = new HashMap<>();
-    private Map<Integer, Epic> epics = new HashMap<>();
-    private Map<Integer, SubTask> subTasks = new HashMap<>();
+    private int id = 0;
+    protected Map<Integer, Task> tasks = new HashMap<>();
+    protected Map<Integer, Epic> epics = new HashMap<>();
+    protected Map<Integer, SubTask> subTasks = new HashMap<>();
     private final HistoryManager historyManager= Managers.getDefaultHistory();
 
 

@@ -9,8 +9,11 @@ public class Task {
         this.name = name;
         this.description = description;
     }
+    protected TypeTask type = TypeTask.TASK;
 
-
+    public TypeTask getType() {
+        return type;
+    }
 
     public void setStatus(Status status){
         if (status.equals(Status.NEW) || status.equals(Status.IN_PROGRESS) || status.equals(Status.DONE))
@@ -19,10 +22,13 @@ public class Task {
     public Status getStatus(){
         return this.status;
     }
+
     @Override
     public String toString(){
-        return name + "(статус=" + status + ")";
+        return id + "," + type + "," + name + "," + status + "," + description;
+
     }
+
     public int getId(){
         return id;
     }
