@@ -121,7 +121,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateTask(int id, Task newTask) {
         if (tasks.containsKey(id)) {
             tasks.put(id,newTask);
-        } else{
+        } else {
             System.out.println("Неправильный ввод id");
         }
     }
@@ -130,7 +130,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateEpic(int id, Epic newEpic) {
         if (epics.containsKey(id)) {
             epics.put(id,newEpic);
-        } else{
+        } else {
             System.out.println("Неправильный ввод id");
         }
     }
@@ -231,8 +231,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epics.containsKey(id)) {
             if (isAllSubTasksEqualsStatus(id, status) && (status.equals(Status.NEW) || status.equals(Status.DONE))) {
                 getEpic(id).setStatus(status);
-            }
-            else {
+            } else {
                 getEpic(id).setStatus(Status.IN_PROGRESS);
             }
         }
