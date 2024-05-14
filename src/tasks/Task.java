@@ -1,33 +1,34 @@
 package tasks;
 
 public class Task {
-    protected int id;;
+    protected int id;
     protected String name;
     protected String description;
     protected Status status;
     protected TypeTask type;
-    public Task(String name, String description){
+
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.id = 0;
         this.status = Status.NEW;
         this.type = TypeTask.TASK;
     }
-    
+
     public TypeTask getType() {
         return type;
     }
 
-    public void setStatus(Status status){
+    public void setStatus(Status status) {
         if (status.equals(Status.NEW) || status.equals(Status.IN_PROGRESS) || status.equals(Status.DONE))
             this.status = status;
     }
-    public Status getStatus(){
+    public Status getStatus() {
         return this.status;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return id + "," + type + "," + name + "," + status + "," + description;
 
     }
