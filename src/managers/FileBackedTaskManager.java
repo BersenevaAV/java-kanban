@@ -17,11 +17,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         for (Task task: allTasks) {
             if (task != null && task.getType().equals(TypeTask.TASK)) {
                 super.tasks.put(task.getId(), task);
-            }
-            else if (task != null && task.getType().equals(TypeTask.EPIC)) {
+            } else if (task != null && task.getType().equals(TypeTask.EPIC)) {
                 super.epics.put(task.getId(), (Epic)task);
-            }
-            else if (task != null && task.getType().equals(TypeTask.SUBTASK)) {
+            } else if (task != null && task.getType().equals(TypeTask.SUBTASK)) {
                 super.subTasks.put(task.getId(), (SubTask)task);
             }
         }
@@ -78,18 +76,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             task = new Task(taskStr[2], taskStr[4]);
             task.setId(Integer.parseInt(taskStr[0]));
             task.setStatus(Status.valueOf(taskStr[3]));
-        }
-        else if (TypeTask.valueOf(taskStr[1]).equals(TypeTask.EPIC)) {
+        } else if (TypeTask.valueOf(taskStr[1]).equals(TypeTask.EPIC)) {
             task = new Epic(taskStr[2], taskStr[4]);
             task.setId(Integer.parseInt(taskStr[0]));
             task.setStatus(Status.valueOf(taskStr[3]));
-        }
-        else if (TypeTask.valueOf(taskStr[1]).equals(TypeTask.SUBTASK)) {
+        } else if (TypeTask.valueOf(taskStr[1]).equals(TypeTask.SUBTASK)) {
             task = new SubTask(taskStr[2], taskStr[4],Integer.parseInt(taskStr[5]));
             task.setId(Integer.parseInt(taskStr[0]));
             task.setStatus(Status.valueOf(taskStr[3]));
-        }
-        else {
+        } else {
             task = null;
         }
         return task;
