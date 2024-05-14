@@ -71,14 +71,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     }
 
-    static public Task fromString(String value) {
+    public static Task fromString(String value) {
         String[] taskStr = value.split(",");
         Task task;
         if (TypeTask.valueOf(taskStr[1]).equals(TypeTask.TASK)) {
             task = new Task(taskStr[2], taskStr[4]);
             task.setId(Integer.parseInt(taskStr[0]));
             task.setStatus(Status.valueOf(taskStr[3]));
-
         }
         else if (TypeTask.valueOf(taskStr[1]).equals(TypeTask.EPIC)) {
             task = new Epic(taskStr[2], taskStr[4]);
@@ -96,7 +95,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return task;
     }
 
-    static public FileBackedTaskManager loadFromFile(File file) throws IOException {
+    public static FileBackedTaskManager loadFromFile(File file) throws IOException {
         List<Task> allTasks = new ArrayList<>();
         FileReader rd = new FileReader(file.getName(), StandardCharsets.UTF_8);
         BufferedReader br = new BufferedReader(rd);
