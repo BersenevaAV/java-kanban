@@ -33,17 +33,17 @@ public class Task {
 
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
-    public void setId(int id){
-        if (this.id == 0)
+    public void setId(int id) {
+        if (this.id==0)
             this.id = id;
     }
 
     @Override
-    public boolean equals(Object obj){
-        return obj != null && obj.getClass() == this.getClass() && ((Task) obj).getId()==this.id && this.id!=0;
+    public boolean equals(Object obj) {
+        return obj!=null && obj.getClass()==this.getClass() && ((Task) obj).getId()==this.id && this.id!=0;
     }
 
 
