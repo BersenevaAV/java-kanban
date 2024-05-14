@@ -1,11 +1,16 @@
+package managers;
+
+import managers.HistoryManager;
+import tasks.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-public class InMemoryHistoryManager implements HistoryManager{
+public class InMemoryHistoryManager implements HistoryManager {
     private final List<Task> historyList = new ArrayList<>();
-    Map<Integer,Node> historyMap =  new HashMap<>();
+    Map<Integer, Node> historyMap =  new HashMap<>();
 
     @Override
     public void add(Task task){
@@ -38,7 +43,7 @@ public class InMemoryHistoryManager implements HistoryManager{
         return historyList;
     }
 
-    //--CustomLinkedList--
+    // CustomLinkedList
     public Node head = null;
     public Node tail = null;
     private int size = 0;
