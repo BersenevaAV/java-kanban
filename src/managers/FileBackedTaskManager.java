@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file = new File("file.txt");
 
-    private void save(){
+    private void save() {
         try (FileWriter fw = new FileWriter(file, StandardCharsets.UTF_8)) {
             fw.write("id,type,name,status,description,epic" + "\n");
             for (Task task: super.tasks.values()) {
