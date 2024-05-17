@@ -1,70 +1,27 @@
 package managers;
-import tasks.*;
 
+import tasks.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    String filename;
+    private final File file = new File("file.txt");
 
-    public FileBackedTaskManager() {
-        this.filename = "file.txt";
-    }
-
-    public FileBackedTaskManager(List<Task> allTasks) {
-        for (Task task: allTasks) {
-            if (task != null && task.getType().equals(TypeTask.TASK)) {
-                super.tasks.put(task.getId(), task);
-            } else if (task != null && task.getType().equals(TypeTask.EPIC)) {
-                super.epics.put(task.getId(), (Epic)task);
-            } else if (task != null && task.getType().equals(TypeTask.SUBTASK)) {
-                super.subTasks.put(task.getId(), (SubTask)task);
-            }
-        }
-    }
-
-    @Override
-    public int addNewTask(Task task) {
-        int id = super.addNewTask(task);
-        save();
-        return id;
-    }
-
-    @Override
-    public int addNewEpic(Epic epic) {
-        int id = super.addNewEpic(epic);
-        save();
-        return id;
-    }
-
-    @Override
-    public int addNewSubTask(SubTask subtask) {
-        int id = super.addNewSubTask(subtask);
-        save();
-        return id;
-    }
-
-    public void save() {
-        try (FileWriter fw = new FileWriter(filename, StandardCharsets.UTF_8)) {
+    private void save(){
+        try (FileWriter fw = new FileWriter(file, StandardCharsets.UTF_8)) {
             fw.write("id,type,name,status,description,epic" + "\n");
-            for (Task task: tasks.values()) {
+            for (Task task: super.tasks.values()) {
                 fw.write(task.toString() + "\n");
             }
-            for (Task task: epics.values()) {
+            for (Task task: super.epics.values()) {
                 fw.write(task.toString() + "\n");
             }
-            for (Task task: subTasks.values()) {
+            for (Task task: super.subTasks.values()) {
                 fw.write(task.toString() + "\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ManagerSaveException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException(e);
         }
-
-
     }
 
     public static Task fromString(String value) {
@@ -89,14 +46,115 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     public static FileBackedTaskManager loadFromFile(File file) throws IOException {
-        List<Task> allTasks = new ArrayList<>();
+        FileBackedTaskManager fManager = new FileBackedTaskManager();
         FileReader rd = new FileReader(file.getName(), StandardCharsets.UTF_8);
         BufferedReader br = new BufferedReader(rd);
         br.readLine();
         while (br.ready()) {
-            allTasks.add(fromString(br.readLine()));
+            Task task = fromString(br.readLine());
+            if (task != null && task.getType().equals(TypeTask.TASK)) {
+                fManager.addNewTask(task);
+            } else if (task != null && task.getType().equals(TypeTask.EPIC)) {
+                fManager.addNewEpic((Epic)task);
+            } else if (task != null && task.getType().equals(TypeTask.SUBTASK)) {
+                fManager.addNewSubTask((SubTask)task);
+            }
         }
         br.close();
-        return new FileBackedTaskManager(allTasks);
+        return fManager;
+    }
+
+    //переопределения методов InMemoryTaskManager
+    @Override
+    public int addNewTask(Task task) {
+        int id = super.addNewTask(task);
+        save();
+        return id;
+    }
+
+    @Override
+    public int addNewEpic(Epic epic) {
+        int id = super.addNewEpic(epic);
+        save();
+        return id;
+    }
+
+    @Override
+    public int addNewSubTask(SubTask subtask) {
+        int id = super.addNewSubTask(subtask);
+        save();
+        return id;
+    }
+
+    @Override
+    public void clearAllTasks() {
+        super.clearAllTasks();
+        save();
+    }
+
+    @Override
+    public void clearAllEpics() {
+        super.clearAllEpics();
+        save();
+    }
+
+    @Override
+    public void clearAllSubTasks() {
+        super.clearAllSubTasks();
+        save();
+    }
+
+    @Override
+    public void updateTask(int id, Task newTask) {
+        super.updateTask(id, newTask);
+        save();
+    }
+
+    @Override
+    public void updateEpic(int id, Epic newEpic) {
+        super.updateEpic(id, newEpic);
+        save();
+    }
+
+    @Override
+    public void updateSubTask(int id, SubTask newSubTask) {
+        super.updateSubTask(id, newSubTask);
+        save();
+    }
+
+    @Override
+    public void deleteTask(int id) {
+        super.deleteTask(id);
+        save();
+    }
+
+    @Override
+    public void deleteEpic(int id) {
+        super.deleteEpic(id);
+        save();
+    }
+
+    @Override
+    public void deleteSubTask(int id) {
+        super.deleteSubTask(id);
+        save();
+    }
+
+    @Override
+    public void setStatusTask(int id, Status status) {
+        super.setStatusTask(id, status);
+        save();
+    }
+
+    @Override
+    public void setStatusEpic(int id, Status status) {
+        super.setStatusEpic(id, status);
+        save();
+    }
+
+    @Override
+    public void setStatusSubTask(int id, Status status) {
+        super.setStatusSubTask(id, status);
+        save();
     }
 }

@@ -1,8 +1,4 @@
 id,type,name,status,description,epic
-1,TASK,Купить хлеб,NEW,Описание
-2,TASK,Забрать заказ,NEW,Описание
-3,EPIC,Ремонт,NEW,Описание
-4,EPIC,Переезд,NEW,Описание
-5,SUBTASK,Задача 1,NEW,Описание,3
-6,SUBTASK,Задача 2,NEW,Описание,3
-7,SUBTASK,Задача 3,NEW,Описание,3
+1,TASK,Задача,NEW,Описание
+2,EPIC,Эпик,NEW,Описание
+3,SUBTASK,Подзадача,NEW,Описание,2

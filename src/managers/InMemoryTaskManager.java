@@ -167,12 +167,11 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteEpic(int id) {
         if (epics.containsKey(id)) {
             if (!getEpic(id).getEpicSubTasks().isEmpty()) {
-                subTasks.values().removeAll(getEpic(id).getEpicSubTasks());
                 for (int i:getEpic(id).getEpicSubTasks()) {
                     historyManager.remove(i);
+                    subTasks.remove(i);
                 }
             }
-            subTasks.values().removeAll(getEpic(id).getEpicSubTasks());
             epics.remove(id);
             historyManager.remove(id);
         } else {
@@ -210,7 +209,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     ////установить статус задачи
-
     public void setStatusTask(int id, Status status) {
         if (tasks.containsKey(id)) {
             getTask(id).setStatus(status);
