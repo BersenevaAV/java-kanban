@@ -24,7 +24,7 @@ public class InMemoryTaskManager implements TaskManager {
         increaseId();
         tasks.put(this.id, task);
         task.setId(this.id);
-        if(task.getStartTime() != null && isCrossing(task) == false) {
+        if (task.getStartTime() != null && isCrossing(task) == false) {
             allTasks.add(task);
         }
         return this.id;
@@ -35,7 +35,7 @@ public class InMemoryTaskManager implements TaskManager {
         increaseId();
         epics.put(id, epic);
         epic.setId(this.id);
-        if(epic.getStartTime() != null)
+        if (epic.getStartTime() != null)
             allTasks.add(epic);
         return this.id;
     }
@@ -49,7 +49,7 @@ public class InMemoryTaskManager implements TaskManager {
             subtask.setId(this.id);
             getEpic(idEpic).addSubTask(subtask);
             updateEpicStatus(idEpic);
-            if(subtask.getStartTime() != null && isCrossing(subtask) == false)
+            if (subtask.getStartTime() != null && isCrossing(subtask) == false)
                 allTasks.add(subtask);
             return this.id;
         } else {
@@ -97,8 +97,8 @@ public class InMemoryTaskManager implements TaskManager {
 
         epics.values().stream()
                 .filter(epic -> !epic.getEpicSubTasks().isEmpty())
-                .map(epic -> {epic.setStatus(Status.NEW); return epic;})
-                .map(epic -> {epic.clearSubtasks(); return epic;});
+                .map( epic -> { epic.setStatus(Status.NEW); return epic; })
+                .map( epic -> { epic.clearSubtasks(); return epic; });
                 //.collect(Collectors.toList());
         this.subTasks.clear();
     }
@@ -136,7 +136,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateTask(int id, Task newTask) {
         if (tasks.containsKey(id)) {
             tasks.put(id,newTask);
-            if(newTask.getStartTime() != null && isCrossing(newTask) == false)
+            if (newTask.getStartTime() != null && isCrossing(newTask) == false)
                 allTasks.add(newTask);
         } else {
             System.out.println("Неправильный ввод id");
@@ -160,7 +160,7 @@ public class InMemoryTaskManager implements TaskManager {
             subTasks.put(id,newSubTask);
             int epicId = getSubTask(id).getIdEpic();
             updateEpicStatus(epicId);
-            if(newSubTask.getStartTime() != null && isCrossing(newSubTask) == false)
+            if (newSubTask.getStartTime() != null && isCrossing(newSubTask) == false)
                 allTasks.add(newSubTask);
         } else {
             System.out.println("Неправильный ввод id");
