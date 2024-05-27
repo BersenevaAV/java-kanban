@@ -94,10 +94,10 @@ public class InMemoryTaskManager implements TaskManager {
 
         epics.values().stream()
                 .filter(epic -> !epic.getEpicSubTasks().isEmpty())
-                .map( epic -> {
+                .map(epic -> {
                     epic.setStatus(Status.NEW);
                     return epic; })
-                .map( epic -> {
+                .map(epic -> {
                     epic.clearSubtasks(); return epic; });
                 //.collect(Collectors.toList());
         this.subTasks.clear();
