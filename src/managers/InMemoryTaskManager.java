@@ -1,10 +1,7 @@
 package managers;
 
-import java.time.LocalDateTime;
 import java.util.*;
-
 import tasks.*;
-import java.util.stream.Collectors;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id = 0;
@@ -97,8 +94,11 @@ public class InMemoryTaskManager implements TaskManager {
 
         epics.values().stream()
                 .filter(epic -> !epic.getEpicSubTasks().isEmpty())
-                .map( epic -> { epic.setStatus(Status.NEW); return epic; })
-                .map( epic -> { epic.clearSubtasks(); return epic; });
+                .map( epic -> {
+                    epic.setStatus(Status.NEW);
+                    return epic; })
+                .map( epic -> {
+                    epic.clearSubtasks(); return epic; });
                 //.collect(Collectors.toList());
         this.subTasks.clear();
     }
