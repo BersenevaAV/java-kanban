@@ -3,7 +3,7 @@ package tasks;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class Task implements Comparable<Task>{
+public class Task implements Comparable<Task> {
     protected int id;
     protected String name;
     protected String description;
@@ -70,7 +70,7 @@ public class Task implements Comparable<Task>{
     public int compareTo(Task task) {
         if (this.startTime.isAfter(task.getStartTime()))
             return 1;
-        else if(this.startTime.equals(task.getStartTime()))
+        else if (this.startTime.equals(task.getStartTime()))
             return 0;
         else
             return -1;

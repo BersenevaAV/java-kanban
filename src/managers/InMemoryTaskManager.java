@@ -167,7 +167,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    public void updateEpicStatus(int epicId){
+    public void updateEpicStatus(int epicId) {
         if (isAllSubTasksEqualsStatus(epicId, Status.NEW)) {
             getEpic(epicId).setStatus(Status.NEW);
         } else if (isAllSubTasksEqualsStatus(epicId, Status.DONE)) {
@@ -277,17 +277,16 @@ public class InMemoryTaskManager implements TaskManager {
         return allTasks;
     }
 
-    public boolean isCrossing(Task newtask){
+    public boolean isCrossing(Task newtask) {
         Optional<Task> crossingTasks = allTasks.stream()
                 .filter(task -> !(task.getStartTime().isAfter(newtask.getEndTime())
                                || task.getEndTime().isBefore(newtask.getStartTime())
                                  ))
                 .findFirst();
-        if(crossingTasks.isPresent()){
+        if (crossingTasks.isPresent()) {
             System.out.println(crossingTasks);
             return true;
-        }
-        else
+        } else
             return false;
     }
 }
