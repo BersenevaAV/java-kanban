@@ -11,12 +11,10 @@ class InMemoryTaskManagerTest {
 
     @Test
     void getHistoryOfTaskManager() {
-
         InMemoryTaskManager taskManager = new InMemoryTaskManager();
         int idEpic = taskManager.addNewEpic(new Epic("Купить продукты на неделю", ""));
         int idSubTask1 = taskManager.addNewSubTask(new SubTask("Купить хлеб","",idEpic));
         assertFalse(taskManager.getHistory().isEmpty());
-
     }
 
 }
