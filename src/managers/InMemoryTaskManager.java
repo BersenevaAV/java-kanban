@@ -210,7 +210,6 @@ public class InMemoryTaskManager implements TaskManager {
             int idEpic = getSubTask(id).getIdEpic();
             ArrayList<Integer> subTasksofEpic = getEpic(idEpic).getEpicSubTasks();
             if (subTasksofEpic.contains(id)) {
-                //subTasksofEpic.remove((Object)id);
                 getEpic(idEpic).deleteSubTask(id);
                 historyManager.remove(id);
             }
