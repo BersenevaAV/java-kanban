@@ -38,20 +38,20 @@ public class Epic extends Task {
 
     public void setTime() {
         for (SubTask s: subtasks.values()) {
-            if(s.getStartTime()!=null) {
-                if(this.startTime == null)
+            if (s.getStartTime() != null) {
+                if (this.startTime == null)
                     this.startTime = s.getStartTime();
                 else {
-                    if(this.startTime.isAfter(s.getStartTime()))
+                    if (this.startTime.isAfter(s.getStartTime()))
                         this.startTime = s.getStartTime();
                 }
-                if(this.endTime == null)
+                if (this.endTime == null)
                     this.endTime = s.getEndTime();
                 else {
-                    if(this.endTime.isBefore(s.getEndTime()))
+                    if (this.endTime.isBefore(s.getEndTime()))
                         this.endTime = s.getEndTime();
                 }
-                if(this.startTime != null && this.endTime != null)
+                if (this.startTime != null && this.endTime != null)
                     this.duration = Duration.between(startTime,endTime);
             }
         }
