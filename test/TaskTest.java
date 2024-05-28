@@ -17,7 +17,7 @@ class TaskTest {
 
         final int taskId = taskManager.addNewTask(task);
         final Task savedTask = taskManager.getTask(taskId);
-        
+
         assertNotNull(savedTask, "Задача не найдена.");
         assertEquals(task, savedTask, "Задачи не совпадают.");
 
