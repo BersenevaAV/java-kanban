@@ -63,11 +63,18 @@ class EpicTest {
         InMemoryTaskManager taskManager = new InMemoryTaskManager();
         int epicId = taskManager.addNewEpic(epic);
 
-        SubTask subtask = new SubTask("Subtask1", "Subtask1 description", epicId, 5, ldt);
-        taskManager.addNewSubTask(subtask);
+        SubTask subtask1 = new SubTask("Subtask1", "Subtask1 description", epicId, 5, ldt);
+        taskManager.addNewSubTask(subtask1);
 
         assertEquals(taskManager.getEpic(epicId).getStartTime(), ldt);
         assertEquals(taskManager.getEpic(epicId).getStartTime().plus(Duration.ofMinutes(5)), taskManager.getEpic(epicId).getEndTime());
+
+        SubTask subtask2 = new SubTask("Subtask2", "Subtask2 description", epicId, 5, ldt.plus(Duration.ofMinutes(60)));
+        taskManager.addNewSubTask(subtask2);
+
+        assertEquals(taskManager.getEpic(epicId).getEndTime(), subtask2.getEndTime());
+        assertEquals(taskManager.getEpic(epicId).getStartTime(), subtask1.getStartTime());
+
     }
 
 }

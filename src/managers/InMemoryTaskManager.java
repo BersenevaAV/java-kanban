@@ -9,7 +9,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected Map<Integer, Epic> epics = new HashMap<>();
     protected Map<Integer, SubTask> subTasks = new HashMap<>();
     private final HistoryManager historyManager = Managers.getDefaultHistory();
-    private final Set<Task> allTasks = new TreeSet<>();
+    private final TreeSet<Task> allTasks = new TreeSet<>();
 
     private void increaseId() {
         id++;
@@ -80,7 +80,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void clearAllEpics() {
-        this.allTasks.removeAll(this.epics.values());
         clearAllSubTasks();
         this.epics.clear();
     }
@@ -272,7 +271,7 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
-    public Set<Task> getPrioritizedTasks() {
+    public TreeSet<Task> getPrioritizedTasks() {
         return allTasks;
     }
 
