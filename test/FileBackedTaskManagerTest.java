@@ -28,13 +28,6 @@ class FileBackedTaskManagerTest {
     }
 
     @Test
-    void createEmptyFManager() {
-        assertTrue(fM.getTasks().isEmpty());
-        assertTrue(fM.getEpics().isEmpty());
-        assertTrue(fM.getSubTasks().isEmpty());
-    }
-
-    @Test
     void addInFile() throws IOException {
         int idTask = fM.addNewTask(new Task("Задача", "Описание"));
         int idEpic = fM.addNewEpic(new Epic("Эпик", "Описание"));

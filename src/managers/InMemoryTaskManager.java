@@ -9,7 +9,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected Map<Integer, Epic> epics = new HashMap<>();
     protected Map<Integer, SubTask> subTasks = new HashMap<>();
     private final HistoryManager historyManager = Managers.getDefaultHistory();
-    Set<Task> allTasks = new TreeSet<>();
+    private final Set<Task> allTasks = new TreeSet<>();
 
     private void increaseId() {
         id++;
@@ -74,11 +74,13 @@ public class InMemoryTaskManager implements TaskManager {
     ////очищение списка задач
     @Override
     public void clearAllTasks() {
+        this.allTasks.removeAll(this.tasks.values());
         this.tasks.clear();
     }
 
     @Override
     public void clearAllEpics() {
+        this.allTasks.removeAll(this.epics.values());
         clearAllSubTasks();
         this.epics.clear();
     }
@@ -89,10 +91,12 @@ public class InMemoryTaskManager implements TaskManager {
                 .filter(epic -> !epic.getEpicSubTasks().isEmpty())
                 .map(epic -> {
                     epic.setStatus(Status.NEW);
-                    return epic; })
-                .map(epic -> {
-                    epic.clearSubtasks(); return epic; });
+                    epic.clearSubtasks();
+                    return epic; });
+
+        this.allTasks.removeAll(this.subTasks.values());
         this.subTasks.clear();
+
     }
 
     @Override
@@ -175,6 +179,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (tasks.containsKey(id)) {
             tasks.remove(id);
             historyManager.remove(id);
+            allTasks.remove(id);
         } else {
             System.out.println("Неправильный ввод id");
         }
@@ -191,6 +196,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
             epics.remove(id);
             historyManager.remove(id);
+            allTasks.remove(id);
         } else {
             System.out.println("Неправильный ввод id");
         }
@@ -206,6 +212,7 @@ public class InMemoryTaskManager implements TaskManager {
                 historyManager.remove(id);
             }
             subTasks.remove(id);
+            allTasks.remove(id);
             //если у эпика больше нет подзадач, то устанавливаю ему новый статус
             if (subTasksofEpic.isEmpty()) {
                 getEpic(idEpic).setStatus(Status.NEW);

@@ -3,6 +3,10 @@ import managers.TaskManager;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
 import tasks.SubTask;
+import tasks.Task;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,5 +45,20 @@ class SubTaskTest {
         int idEpic = taskManager.addNewEpic(new Epic("Купить продукты на неделю", ""));
         int idSubTask1 = taskManager.addNewSubTask(new SubTask("Купить хлеб","",idEpic));
         assertEquals(1, taskManager.getSubTask(idSubTask1).getIdEpic());
+    }
+
+    @Test
+    void checkTimeOfSubtask() {
+        LocalDateTime ldt = LocalDateTime.now();
+
+        Epic epic = new Epic("Epic1", "Epic1 description");
+
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        int epicId = taskManager.addNewEpic(epic);
+
+        SubTask subtask = new SubTask("Subtask1", "Subtask1 description", epicId, 5, ldt);
+        int id = taskManager.addNewSubTask(subtask);
+
+        assertEquals(taskManager.getSubTask(id).getStartTime().plus(Duration.ofMinutes(5)), taskManager.getSubTask(id).getEndTime());
     }
 }

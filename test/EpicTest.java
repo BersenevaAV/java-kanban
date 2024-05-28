@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 import tasks.Epic;
 import tasks.Status;
 import tasks.SubTask;
+import tasks.Task;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 class EpicTest {
 
@@ -48,6 +52,22 @@ class EpicTest {
         assertEquals(taskManager.getEpic(idEpic).getStatus(), Status.DONE);
         taskManager.addNewSubTask(new SubTask("Купить молоко","",idEpic));
         assertEquals(taskManager.getEpic(idEpic).getStatus(), Status.IN_PROGRESS);
+    }
+
+    @Test
+    void checkTimeOfEpic() {
+        LocalDateTime ldt = LocalDateTime.now();
+
+        Epic epic = new Epic("Epic1", "Epic1 description");
+
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        int epicId = taskManager.addNewEpic(epic);
+
+        SubTask subtask = new SubTask("Subtask1", "Subtask1 description", epicId, 5, ldt);
+        taskManager.addNewSubTask(subtask);
+
+        assertEquals(taskManager.getEpic(epicId).getStartTime(), ldt);
+        assertEquals(taskManager.getEpic(epicId).getStartTime().plus(Duration.ofMinutes(5)), taskManager.getEpic(epicId).getEndTime());
     }
 
 }
