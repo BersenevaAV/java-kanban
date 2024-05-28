@@ -85,13 +85,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void clearAllSubTasks() {
-        /*for (int i: epics.keySet()) {
-            if (!getEpic(i).getEpicSubTasks().isEmpty()) {
-                getEpic(i).getEpicSubTasks().clear();
-                getEpic(i).setStatus(Status.NEW);
-            }
-        }*/
-
         epics.values().stream()
                 .filter(epic -> !epic.getEpicSubTasks().isEmpty())
                 .map(epic -> {
@@ -99,7 +92,6 @@ public class InMemoryTaskManager implements TaskManager {
                     return epic; })
                 .map(epic -> {
                     epic.clearSubtasks(); return epic; });
-                //.collect(Collectors.toList());
         this.subTasks.clear();
     }
 
