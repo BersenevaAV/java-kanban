@@ -7,6 +7,7 @@ import tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 public interface TaskManager {
     ////добавление задач
@@ -55,4 +56,6 @@ public interface TaskManager {
     ArrayList<SubTask> getSubTasksOfEpic(int idEpic);
 
     List<Task> getHistory();
+    TreeSet<Task> getPrioritizedTasks();
+    boolean isCrossing(Task newtask);
 }

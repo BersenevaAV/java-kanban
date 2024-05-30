@@ -34,6 +34,10 @@ public class Task implements Comparable<Task> {
         return type;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setStatus(Status status) {
         if (status.equals(Status.NEW) || status.equals(Status.IN_PROGRESS) || status.equals(Status.DONE))
             this.status = status;
@@ -45,7 +49,9 @@ public class Task implements Comparable<Task> {
 
     @Override
     public String toString() {
-        return id + "," + type + "," + name + "," + status + "," + description;
+        return id + "," + type + "," + name
+                + "," + status + "," + description + ", " + duration + ", "
+                + startTime;
     }
 
     public int getId() {
