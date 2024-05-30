@@ -29,9 +29,9 @@ public class EpicsHandler extends BaseHttpHandler {
 
         if (wayElements.length == 2) {
             sendText(httpExchange, tm.getEpics().toString());
-        } else if(wayElements.length == 3) {
+        } else if (wayElements.length == 3) {
             int id = Integer.parseInt(wayElements[2]);
-            if (tm.getEpics().containsKey(id)){
+            if (tm.getEpics().containsKey(id)) {
                 sendText(httpExchange, tm.getEpic(id).toString());
             } else {
                 sendNotFound(httpExchange, "Not Found");
@@ -41,7 +41,7 @@ public class EpicsHandler extends BaseHttpHandler {
             if (tm.getEpics().containsKey(id)) {
                 httpExchange.sendResponseHeaders(200, 0);
                 List<SubTask> subtasks = new ArrayList<>();
-                for(int i:tm.getEpic(id).getEpicSubTasks()) {
+                for (int i:tm.getEpic(id).getEpicSubTasks()) {
                     subtasks.add(tm.getSubTask(i));
                 }
                 sendText(httpExchange, subtasks.toString());
@@ -55,6 +55,7 @@ public class EpicsHandler extends BaseHttpHandler {
         }
 
     }
+    
     protected void handlePostRequest(HttpExchange httpExchange) throws IOException {
 
         InputStream inputStream = httpExchange.getRequestBody();
