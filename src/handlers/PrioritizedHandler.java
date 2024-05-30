@@ -9,6 +9,7 @@ import java.io.OutputStream;
 
 public class PrioritizedHandler implements HttpHandler {
     TaskManager tm;
+
     public PrioritizedHandler(TaskManager tm) {
         this.tm = tm;
     }
@@ -19,7 +20,7 @@ public class PrioritizedHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         String response = "";
 
-        switch(method) {
+        switch (method) {
             case "GET":
                 response = handleGetHistoryRequest(httpExchange);
                 break;
@@ -40,8 +41,7 @@ public class PrioritizedHandler implements HttpHandler {
         if (wayElements.length == 2) {
             httpExchange.sendResponseHeaders(200, 0);
             return tm.getPrioritizedTasks().toString();
-        }
-        else {
+        } else {
             httpExchange.sendResponseHeaders(500, 0);
             return "Internal Server Error";
         }
