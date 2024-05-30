@@ -53,9 +53,8 @@ public class EpicsHandler extends BaseHttpHandler {
             httpExchange.getResponseBody().write("Internal Server Error".getBytes());
             httpExchange.close();
         }
-
     }
-    
+
     protected void handlePostRequest(HttpExchange httpExchange) throws IOException {
 
         InputStream inputStream = httpExchange.getRequestBody();
