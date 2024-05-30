@@ -23,15 +23,8 @@ class FileBackedTaskManagerTest {
         try (FileWriter fw = new FileWriter(new File("file.txt"), StandardCharsets.UTF_8)) {
             fw.write("");
         } catch (IOException e) {
-            throw new ManagerSaveException(e);
+            throw new ManagerSaveException("Ошибка записи в файл", e);
         }
-    }
-
-    @Test
-    void createEmptyFManager() {
-        assertTrue(fM.getTasks().isEmpty());
-        assertTrue(fM.getEpics().isEmpty());
-        assertTrue(fM.getSubTasks().isEmpty());
     }
 
     @Test

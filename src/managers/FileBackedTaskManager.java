@@ -20,7 +20,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 fw.write(task.toString() + "\n");
             }
         } catch (IOException e) {
-            throw new ManagerSaveException(e);
+            throw new ManagerSaveException("Ошибка записи в файл", e);
         }
     }
 
@@ -157,4 +157,26 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         super.setStatusSubTask(id, status);
         save();
     }
+
+    @Override
+    public Task getTask(int id) {
+        Task task = super.getTask(id);
+        save();
+        return task;
+    }
+
+    @Override
+    public Epic getEpic(int id) {
+        Epic epic = super.getEpic(id);
+        save();
+        return epic;
+    }
+
+    @Override
+    public SubTask getSubTask(int id) {
+        SubTask subtask = super.getSubTask(id);
+        save();
+        return subtask;
+    }
+
 }
