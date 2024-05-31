@@ -58,6 +58,6 @@ public interface TaskManager {
     List<Task> getHistory();
 
     TreeSet<Task> getPrioritizedTasks();
-    
+
     boolean isCrossing(Task newtask);
 }
