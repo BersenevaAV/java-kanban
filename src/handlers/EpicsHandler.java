@@ -7,7 +7,6 @@ import managers.TaskManager;
 import tasks.Epic;
 import tasks.Status;
 import tasks.SubTask;
-import tasks.Task;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -82,15 +81,15 @@ public class EpicsHandler extends BaseHttpHandler {
 
     protected void handleDeleteRequest(HttpExchange httpExchange) throws IOException {
 
-        InputStream inputStream = httpExchange.getRequestBody();
-        String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        String path = httpExchange.getRequestURI().getPath();
+        String[] wayElements = path.split("/");
 
-        Gson gson = new GsonBuilder().registerTypeAdapter(Duration.class, new DurationAdapter())
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-                .create();
-
-        Task task = gson.fromJson(body, Task.class);
-        tm.deleteTask(task.getId());
+        if (wayElements.length == 3) {
+            int id = Integer.parseInt(wayElements[2]);
+            if (tm.getEpics().containsKey(id)) {
+                tm.deleteEpic(id);
+            }
+        }
 
         sendText(httpExchange, "");
     }

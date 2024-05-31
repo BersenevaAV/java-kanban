@@ -1,10 +1,13 @@
+package handlers;
+
 import com.sun.net.httpserver.HttpServer;
-import handlers.TasksHandler;
 import managers.Managers;
 import managers.TaskManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tasks.Epic;
+import tasks.SubTask;
 import tasks.Task;
 
 import java.io.IOException;
@@ -17,7 +20,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HttpTaskServerTest {
+class TasksHandlerTest {
 
     HttpServer httpServer;
     TaskManager tm = Managers.getDefault();
@@ -34,8 +37,9 @@ class HttpTaskServerTest {
         httpServer.stop(1);
     }
 
+
     @Test
-    void addNewTask() throws IOException,InterruptedException {
+    void testHandlePostRequestAddNewTask() throws IOException,InterruptedException {
 
         String taskJson = "{ \"name\": \"Task1\", "+
                 "\"description\": \"Description1\" " +
@@ -64,22 +68,36 @@ class HttpTaskServerTest {
     }
 
     @Test
-    void getHistory() throws IOException,InterruptedException {
-
+    void testHandleGetAllTasks() throws IOException,InterruptedException {
+        tm.addNewTask(new Task("Task1", "Desc1"));
+        tm.addNewTask(new Task("Task2", "Desc2"));
 
         HttpClient client = HttpClient.newHttpClient();
-
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/history"))
+                .uri(URI.create("http://localhost:8080/tasks"))
                 .GET()
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        assertEquals(404, response.statusCode());
-
+        assertEquals(200, response.statusCode(), "Код ответа не совпадает");
     }
 
 
+    @Test
+    void testHandleDeleteRequestDeleteTask() throws IOException,InterruptedException {
 
+        int id1 = tm.addNewTask(new Task("Task1", "Desc1"));
+        int id2 = tm.addNewTask(new Task("Task2", "Desc2"));
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/tasks/"+id1))
+                .DELETE()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, response.statusCode(), "Код ответа не совпадает");
+        assertFalse(tm.getTasks().containsKey(id1));
+        assertTrue(tm.getTasks().containsKey(id2));
+    }
 
 }

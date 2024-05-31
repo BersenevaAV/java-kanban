@@ -67,17 +67,14 @@ public class TasksHandler extends BaseHttpHandler {
 
     @Override
     protected void handleDeleteRequest(HttpExchange httpExchange) throws IOException {
-
-        InputStream inputStream = httpExchange.getRequestBody();
-        String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-
-        Gson gson = new GsonBuilder().registerTypeAdapter(Duration.class, new DurationAdapter())
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-                .create();
-
-        Task task = gson.fromJson(body, Task.class);
-        tm.deleteTask(task.getId());
-
+        String path = httpExchange.getRequestURI().getPath();
+        String[] wayElements = path.split("/");
+        if (wayElements.length == 3) {
+            int id = Integer.parseInt(wayElements[2]);
+            if (tm.getTasks().containsKey(id)) {
+                tm.deleteTask(id);
+            }
+        }
         sendText(httpExchange, "");
     }
 }
