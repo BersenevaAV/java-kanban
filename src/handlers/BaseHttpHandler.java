@@ -19,7 +19,7 @@ public class BaseHttpHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         String response = "";
 
-        switch(method) {
+        switch (method) {
             case "POST":
                 handlePostRequest(httpExchange);
                 break;
@@ -34,11 +34,17 @@ public class BaseHttpHandler implements HttpHandler {
         }
     }
 
-    protected void handleGetRequest(HttpExchange httpExchange) throws IOException {}
+    protected void handleGetRequest(HttpExchange httpExchange) throws IOException {
 
-    protected void handlePostRequest(HttpExchange httpExchange) throws IOException {}
+    }
 
-    protected void handleDeleteRequest(HttpExchange httpExchange) throws IOException {}
+    protected void handlePostRequest(HttpExchange httpExchange) throws IOException {
+
+    }
+
+    protected void handleDeleteRequest(HttpExchange httpExchange) throws IOException {
+        
+    }
 
     protected void sendText(HttpExchange h, String text) throws IOException {
         byte[] resp = text.getBytes(StandardCharsets.UTF_8);
