@@ -56,6 +56,8 @@ public interface TaskManager {
     ArrayList<SubTask> getSubTasksOfEpic(int idEpic);
 
     List<Task> getHistory();
+
     TreeSet<Task> getPrioritizedTasks();
+    
     boolean isCrossing(Task newtask);
 }
