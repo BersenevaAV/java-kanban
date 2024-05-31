@@ -43,7 +43,7 @@ public class BaseHttpHandler implements HttpHandler {
     }
 
     protected void handleDeleteRequest(HttpExchange httpExchange) throws IOException {
-        
+
     }
 
     protected void sendText(HttpExchange h, String text) throws IOException {
